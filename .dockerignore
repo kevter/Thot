@@ -1,0 +1,14 @@
+bin/*
+build/*
+obj/*
+Properties/*
+Dockerfile
+Thoth.ApiTest/*
+.gitignore
+README.md
+LICENSE
+Thoth.sln
+Certificate/*
+Configuration/*
+.vs/*
+.vscode/*

@@ -1,0 +1,36 @@
+version: '3.5'
+services:
+    thoth:
+        build:
+          context: ./
+          dockerfile: Dockerfile
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_URLS=https://+:443;http://+:80
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=Thot_api_gateway_2021
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/Certificate/localhostThoth.pfx
+            - Configuration__Routes=/Configuration/routes.json
+            - Configuration__Insecure=true
+        volumes:
+            - ./Certificate/localhostThoth.pfx:/Certificate/localhostThoth.pfx:ro
+            - ./Thoth.ApiTest/Configuration/routes.json:/Configuration/routes.json:ro
+        ports:
+            - '5000:80'
+            - '5001:443'
+        depends_on:
+            - apitest
+
+    apitest:
+        build:
+          context: ./Thoth.ApiTest/
+          dockerfile: Dockerfile
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_URLS=https://+:443;http://+:80
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=Thot_api_gateway_2021
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/Certificate/localhostThoth.pfx
+        volumes:
+            - ./Certificate/localhostThoth.pfx:/Certificate/localhostThoth.pfx:ro
+        ports:
+            - '5002:80'
+            - '5003:443'

@@ -1,0 +1,23 @@
+{
+  "routes": [
+    {
+      "endpoint": "/api/values",
+      "destination": {
+        "path": "https://localhost:5003/api/values",
+        "requiresAuthentication": "false",
+        "httpMethod": [
+          "GET",
+          "POST",
+          "PUT",
+          "DELETE"
+        ]
+      },
+      "cache": {
+        "TimeSpan": 200
+      }
+    }
+  ],
+  "authenticationService": {
+    "path": "http://localhost:5003/api/auth/"
+  }
+}

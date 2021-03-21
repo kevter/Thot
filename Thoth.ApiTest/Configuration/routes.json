@@ -1,0 +1,23 @@
+{
+  "routes": [
+    {
+      "endpoint": "/api/values",
+      "destination": {
+        "path": "https://apitest/api/values",
+        "requiresAuthentication": "false",
+        "httpMethod": [
+          "GET",
+          "POST",
+          "PUT",
+          "DELETE"
+        ]
+      },
+      "cache": {
+        "TimeSpan": 1
+      }
+    }
+  ],
+  "authenticationService": {
+    "path": "http://apitest/api/auth/"
+  }
+}
