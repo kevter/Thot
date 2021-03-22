@@ -21,7 +21,7 @@
       "applicationUrl": "https://localhost:5001;",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_Kestrel__Certificates__Default__Password": "Thoth_api_gateway_2021",
+        "ASPNETCORE_Kestrel__Certificates__Default__Password": "Thot_api_gateway_2021",
         "ASPNETCORE_Kestrel__Certificates__Default__Path": "Certificate/localhostThoth.pfx"
       }
     }
