@@ -27,20 +27,32 @@ namespace Thoth
 
         private async Task<Response> MakeRequest(Request req)
         {
-            using (var newRequest = new HttpRequestMessage(new HttpMethod(req.Method), req.Endpoint))
+            Response res;
+            try
             {
-                if (req.Authorization != string.Empty && req.Authorization != null)
-                    newRequest.Headers.Add("Authorization", req.Authorization);
-
-                newRequest.Content = new StringContent(req.Body, Encoding.UTF8, req.ContentType);
-                using (var response = await client.SendAsync(newRequest))
+                using (var newRequest = new HttpRequestMessage(new HttpMethod(req.Method), req.Endpoint))
                 {
-                    return new Response
+                    if (req.Authorization != string.Empty && req.Authorization != null)
+                        newRequest.Headers.Add("Authorization", req.Authorization);
+
+                    newRequest.Content = new StringContent(req.Body, Encoding.UTF8, req.ContentType);
+                    using (var response = await client.SendAsync(newRequest))
                     {
-                        StatusCode = (int)response.StatusCode,
-                        Body = await response.Content.ReadAsStringAsync()
-                    };
+                        return new Response
+                        {
+                            StatusCode = (int)response.StatusCode,
+                            Body = await response.Content.ReadAsStringAsync()
+                        };
+                    }
                 }
+            }
+            catch
+            {
+                return new Response
+                {
+                    StatusCode = 500,
+                    Body = "{error: Server internal error}"
+                };
             }
         }
     }
