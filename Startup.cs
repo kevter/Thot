@@ -22,6 +22,7 @@ namespace Thoth
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddMemoryCache();
             services.AddScoped<ICachedResponseService, CachedResponseService>();
             services.AddScoped<ICacheProvider, CacheProvider>();
@@ -66,6 +67,14 @@ namespace Thoth
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            bool anyOrigin = false;
+            bool.TryParse(Configuration["Configuration:AnyOrigin"], out anyOrigin);
+
+            app.UseCors(x => x
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+               .SetIsOriginAllowed(origin => anyOrigin) // allow any origin
+               .AllowCredentials()); // allow credentials
 
             Router router = new Router(Configuration["Configuration:Routes"], gateway);
             app.Run(async (context) =>

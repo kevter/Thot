@@ -11,6 +11,7 @@ services:
             - ASPNETCORE_Kestrel__Certificates__Default__Path=/Certificate/localhostThoth.pfx
             - Configuration__Routes=/Configuration/routes.json
             - Configuration__Insecure=true
+            - Configuration__AnyOrigin=true
         volumes:
             - ./Certificate/localhostThoth.pfx:/Certificate/localhostThoth.pfx:ro
             - ./Thoth.ApiTest/Configuration/routes.json:/Configuration/routes.json:ro
